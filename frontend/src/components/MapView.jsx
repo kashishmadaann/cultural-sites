@@ -101,6 +101,7 @@ const MapView = () => {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [locationLoading, setLocationLoading] = useState(false);
   const { user } = useAuth();
   const { addFavorite, removeFavorite, isFavorited } = useFavorites();
   const [userLocation, setUserLocation] = useState(null);
@@ -168,18 +169,66 @@ const MapView = () => {
       alert('Geolocation is not supported by your browser.');
       return;
     }
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        setShowNearby(true);
-      },
-      (error) => {
-        alert('Unable to retrieve your location.');
-      }
-    );
+
+    // Check if we're on HTTPS or localhost
+    const isSecure = window.location.protocol === 'https:' || window.location.hostname === 'localhost';
+    if (!isSecure) {
+      alert('Geolocation requires HTTPS. Please use HTTPS or localhost to access your location.');
+      return;
+    }
+
+    // Show loading state
+    setLocationLoading(true);
+
+    // First attempt: Fast response with cached data
+    const tryGetLocation = (attempt = 1) => {
+      const options = {
+        enableHighAccuracy: attempt === 1 ? false : true, // Try low accuracy first, then high
+        timeout: attempt === 1 ? 15000 : 30000, // Shorter timeout for first attempt
+        maximumAge: attempt === 1 ? 300000 : 60000 // Allow older cached data for first attempt
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          setShowNearby(true);
+          setLocationLoading(false);
+        },
+        (error) => {
+          if (attempt === 1 && error.code === error.TIMEOUT) {
+            // Try again with high accuracy if first attempt times out
+            console.log('First attempt timed out, trying with high accuracy...');
+            tryGetLocation(2);
+            return;
+          }
+
+          let errorMessage = 'Unable to retrieve your location.';
+          
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage = 'Location access denied. Please allow location access in your browser settings.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage = 'Location information is unavailable. Please check your device settings.';
+              break;
+            case error.TIMEOUT:
+              errorMessage = 'Location request timed out. This might be due to slow internet or GPS signal. Try moving to an open area or check your internet connection.';
+              break;
+            default:
+              errorMessage = 'An unknown error occurred while getting your location.';
+          }
+          
+          alert(errorMessage);
+          setLocationLoading(false);
+        },
+        options
+      );
+    };
+
+    tryGetLocation();
   };
 
   if (loading) {
@@ -302,9 +351,19 @@ const MapView = () => {
             <div className="flex justify-end mb-4">
               <button
                 onClick={handleShowLocation}
-                className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+                disabled={locationLoading}
+                className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FaLocationArrow className="mr-2" /> Show My Location
+                {locationLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"></div>
+                    Getting location...
+                  </>
+                ) : (
+                  <>
+                    <FaLocationArrow className="mr-2" /> Show My Location
+                  </>
+                )}
               </button>
             </div>
             <div className="bg-white rounded-xl shadow-lg overflow-hidden flex-grow z-10 h-[calc(100vh-24rem)] md:h-[calc(100vh-16rem)]">
