@@ -10,22 +10,24 @@ const Button = ({
   className = '',
   ...props
 }) => {
-  const baseStyles = "font-semibold rounded focus:outline-none focus:ring-2 focus:ring-opacity-50 transition ease-in-out duration-150";
+  const baseStyles =
+    "font-semibold rounded-full shadow-md focus:outline-none focus:ring-4 focus:ring-opacity-40 transition-all duration-200 tracking-wide";
 
   const variantStyles = {
-    primary: "bg-indigo-600 hover:bg-indigo-700 text-white focus:ring-indigo-500",
-    secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800 focus:ring-gray-400",
-    danger: "bg-red-500 hover:bg-red-700 text-white focus:ring-red-500",
-    outline: "bg-transparent hover:bg-indigo-50 text-indigo-700 border border-indigo-500 focus:ring-indigo-500"
+    primary: "bg-teal-500 hover:bg-teal-600 text-white focus:ring-teal-400",
+    secondary: "bg-violet-100 hover:bg-violet-200 text-violet-700 focus:ring-violet-300",
+    danger: "bg-rose-500 hover:bg-rose-600 text-white focus:ring-rose-400",
+    outline: "bg-transparent hover:bg-amber-50 text-amber-700 border border-amber-400 focus:ring-amber-300",
+    success: "bg-emerald-500 hover:bg-emerald-600 text-white focus:ring-emerald-400"
   };
 
   const sizeStyles = {
-    sm: "py-1 px-2 text-sm",
-    md: "py-2 px-4 text-base",
-    lg: "py-3 px-6 text-lg"
+    sm: "py-1.5 px-4 text-sm",
+    md: "py-2.5 px-6 text-base",
+    lg: "py-3.5 px-8 text-lg"
   };
 
-  const disabledStyles = "opacity-50 cursor-not-allowed";
+  const disabledStyles = "opacity-40 cursor-not-allowed";
 
   return (
     <button
@@ -34,7 +36,7 @@ const Button = ({
       disabled={disabled}
       className={`
         ${baseStyles}
-        ${variantStyles[variant]}
+        ${variantStyles[variant] || variantStyles.primary}
         ${sizeStyles[size]}
         ${disabled ? disabledStyles : ''}
         ${className}
@@ -46,4 +48,4 @@ const Button = ({
   );
 };
 
-export default Button; 
+export default Button;

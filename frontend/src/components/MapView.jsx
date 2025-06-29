@@ -18,63 +18,63 @@ if (typeof window !== 'undefined') {
   });
 }
 
-// Custom circle marker styles for different categories
+// Custom circle marker styles for different categories (NEW COLOR SCHEME)
 const categoryStyles = {
   museum: {
-    color: '#ef4444', // red
-    fillColor: '#ef4444',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#06b6d4', // teal-500
+    fillColor: '#06b6d4',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   church: {
-    color: '#3b82f6', // blue
-    fillColor: '#3b82f6',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#6366f1', // indigo-500
+    fillColor: '#6366f1',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   monument: {
-    color: '#22c55e', // green
-    fillColor: '#22c55e',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#f59e42', // amber-500
+    fillColor: '#f59e42',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   gallery: {
-    color: '#f97316', // orange
-    fillColor: '#f97316',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#10b981', // emerald-500
+    fillColor: '#10b981',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   artwork: {
-    color: '#8b5cf6', // purple
-    fillColor: '#8b5cf6',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#f43f5e', // rose-500
+    fillColor: '#f43f5e',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   theatre: {
-    color: '#ec4899', // pink
-    fillColor: '#ec4899',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#a21caf', // violet-700
+    fillColor: '#a21caf',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   'historic building': {
-    color: '#14b8a6', // teal
-    fillColor: '#14b8a6',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#64748b', // slate-500
+    fillColor: '#64748b',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   },
   default: {
-    color: '#eab308', // yellow
-    fillColor: '#eab308',
-    fillOpacity: 0.7,
-    radius: 8,
-    weight: 2
+    color: '#fbbf24', // yellow-400
+    fillColor: '#fbbf24',
+    fillOpacity: 0.75,
+    radius: 10,
+    weight: 3
   }
 };
 
@@ -442,13 +442,19 @@ const MapView = () => {
           </div>
         </div>
 
-        <div className="mt-6 bg-white rounded-xl shadow-lg p-6 flex-shrink-0">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4">Map Legend</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="mt-8 bg-gradient-to-r from-teal-50 to-indigo-50 rounded-2xl shadow-xl p-8 flex-shrink-0 border border-teal-100">
+          <h3 className="text-2xl font-bold text-indigo-700 mb-6 tracking-wide">Map Legend</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {Object.entries(categoryStyles).map(([category, style]) => (
-              <div key={category} className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50">
-                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: style.color }}></div>
-                <span className="text-gray-700 capitalize">{category}</span>
+              <div
+                key={category}
+                className="flex items-center space-x-4 p-3 rounded-xl bg-white/80 hover:bg-teal-50 transition-all shadow-sm border border-teal-100"
+              >
+                <div
+                  className="w-6 h-6 rounded-full border-2 border-white shadow"
+                  style={{ backgroundColor: style.color }}
+                ></div>
+                <span className="text-indigo-800 font-medium capitalize tracking-wide">{category.replace('_', ' ')}</span>
               </div>
             ))}
           </div>
@@ -458,4 +464,4 @@ const MapView = () => {
   );
 };
 
-export default MapView; 
+export default MapView;

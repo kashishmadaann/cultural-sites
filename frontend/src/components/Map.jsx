@@ -12,7 +12,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const MapDisplay = ({ sites = [], center = [50.8333, 12.9167], zoom = 13, className = "h-[400px] w-full" }) => {
+const MapDisplay = ({ sites = [], center = [50.8333, 12.9167], zoom = 13, className = "h-[400px] w-full rounded-3xl shadow-2xl border-4 border-emerald-100" }) => {
   if (!sites || sites.length === 0) {
     return (
       <MapContainer center={center} zoom={zoom} className={className}>
@@ -34,14 +34,16 @@ const MapDisplay = ({ sites = [], center = [50.8333, 12.9167], zoom = 13, classN
         site.latitude && site.longitude ? (
           <Marker key={site._id} position={[site.latitude, site.longitude]}>
             <Popup>
-              <h3 className="font-semibold text-lg mb-1">{site.name}</h3>
-              <p className="text-sm text-gray-600 mb-2">{site.category}</p>
-              <Link 
-                to={`/sites/${site._id}`} 
-                className="text-indigo-600 hover:text-indigo-800 hover:underline text-sm font-medium"
-              >
-                View Details
-              </Link>
+              <div className="p-2 rounded-xl bg-gradient-to-br from-emerald-50 via-violet-50 to-rose-100 shadow-lg border border-emerald-100">
+                <h3 className="font-extrabold text-lg mb-1 text-emerald-700">{site.name}</h3>
+                <p className="text-xs font-semibold text-violet-600 mb-2 uppercase tracking-wider">{site.category}</p>
+                <Link
+                  to={`/sites/${site._id}`}
+                  className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-emerald-400 to-violet-500 text-white font-medium shadow hover:from-emerald-500 hover:to-violet-600 transition-all text-xs"
+                >
+                  View Details
+                </Link>
+              </div>
             </Popup>
           </Marker>
         ) : null
@@ -50,4 +52,4 @@ const MapDisplay = ({ sites = [], center = [50.8333, 12.9167], zoom = 13, classN
   );
 };
 
-export default MapDisplay; 
+export default MapDisplay;

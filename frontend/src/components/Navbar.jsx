@@ -24,35 +24,35 @@ const Navbar = () => {
   }, [isDropdownOpen]);
 
   const handleLogout = () => {
-    console.log('Logout initiated');
     logout();
     setIsDropdownOpen(false);
-    // Force a hard reload to ensure clean state
     setTimeout(() => {
       window.location.href = '/';
     }, 100);
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-[9999] bg-white shadow">
+    <nav className="fixed top-0 left-0 w-full z-[9999] bg-gradient-to-r from-emerald-50 via-violet-50 to-rose-100 shadow-lg border-b-2 border-emerald-200">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo and main nav */}
           <div className="flex items-center space-x-8">
-            <Link to="/" className="flex items-center space-x-2 text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
-              <FaMapMarkerAlt className="w-6 h-6" />
+            <Link to="/" className="flex items-center space-x-2 text-2xl font-extrabold bg-gradient-to-tr from-emerald-400 to-violet-500 bg-clip-text text-transparent tracking-tight hover:opacity-80 transition-all">
+              <span className="bg-gradient-to-tr from-emerald-400 to-violet-500 p-2 rounded-full shadow-lg">
+                <FaMapMarkerAlt className="w-6 h-6 text-white" />
+              </span>
               <span>Chemnitz Cultural Sites</span>
             </Link>
             <div className="hidden md:flex space-x-6">
               <Link 
                 to="/map" 
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                className="text-violet-700 hover:text-emerald-600 font-semibold transition-all px-2 py-1 rounded-lg hover:bg-emerald-50"
               >
                 Map View
               </Link>
               <Link 
                 to="/sites" 
-                className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                className="text-violet-700 hover:text-emerald-600 font-semibold transition-all px-2 py-1 rounded-lg hover:bg-emerald-50"
               >
                 All Sites
               </Link>
@@ -63,7 +63,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-600 hover:text-blue-600 focus:outline-none"
+              className="text-violet-700 hover:text-emerald-600 focus:outline-none"
             >
               {isMenuOpen ? (
                 <FaTimes className="w-6 h-6" />
@@ -79,7 +79,7 @@ const Navbar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                  className="flex items-center space-x-2 text-emerald-700 hover:text-violet-700 font-semibold transition-all px-3 py-1 rounded-lg hover:bg-violet-50"
                 >
                   <FaHeart className="w-5 h-5" />
                   <span>Dashboard</span>
@@ -87,7 +87,7 @@ const Navbar = () => {
                 <div className="relative">
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                    className="flex items-center space-x-2 text-violet-700 hover:text-emerald-700 font-semibold transition-all px-3 py-1 rounded-lg hover:bg-emerald-50"
                   >
                     <FaUser className="w-5 h-5" />
                     <span>{user?.name}</span>
@@ -106,13 +106,13 @@ const Navbar = () => {
                     </svg>
                   </button>
                   {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 transform origin-top-right transition-all duration-200">
+                    <div className="absolute right-0 mt-2 w-48 bg-white/90 rounded-xl shadow-2xl py-2 border border-emerald-100 transform origin-top-right transition-all duration-200">
                       <button
                         onClick={() => {
                           handleLogout();
                           setIsDropdownOpen(false);
                         }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                        className="block w-full text-left px-4 py-2 text-sm text-violet-700 hover:bg-emerald-50 hover:text-emerald-700 font-semibold transition-all rounded-lg"
                       >
                         Sign Out
                       </button>
@@ -124,13 +124,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-gray-600 hover:text-blue-600 font-medium transition-colors"
+                  className="text-violet-700 hover:text-emerald-700 font-semibold transition-all px-3 py-1 rounded-lg hover:bg-emerald-50"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors shadow-md hover:shadow-lg"
+                  className="bg-gradient-to-r from-emerald-400 to-violet-500 text-white px-6 py-2 rounded-full hover:from-emerald-500 hover:to-violet-600 font-bold transition-all shadow-md hover:shadow-lg"
                 >
                   Register
                 </Link>
@@ -141,18 +141,18 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden bg-white border-t mt-2 py-2">
+          <div className="md:hidden bg-white/90 border-t border-emerald-100 mt-2 py-2 rounded-b-2xl shadow-xl">
             <div className="flex flex-col space-y-2 px-4">
               <Link
                 to="/map"
-                className="text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                className="text-violet-700 hover:text-emerald-700 font-semibold py-2 transition-all rounded-lg hover:bg-emerald-50"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Map View
               </Link>
               <Link
                 to="/sites"
-                className="text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                className="text-violet-700 hover:text-emerald-700 font-semibold py-2 transition-all rounded-lg hover:bg-emerald-50"
                 onClick={() => setIsMenuOpen(false)}
               >
                 All Sites
@@ -161,21 +161,20 @@ const Navbar = () => {
                 <>
                   <Link
                     to="/dashboard"
-                    className="text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                    className="text-emerald-700 hover:text-violet-700 font-semibold py-2 transition-all rounded-lg hover:bg-violet-50"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={() => {
-                      console.log('Mobile logout initiated');
                       logout();
                       setIsMenuOpen(false);
                       setTimeout(() => {
                         window.location.href = '/';
                       }, 100);
                     }}
-                    className="text-left text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                    className="text-left text-violet-700 hover:text-emerald-700 font-semibold py-2 transition-all rounded-lg hover:bg-emerald-50"
                   >
                     Sign Out
                   </button>
@@ -184,14 +183,14 @@ const Navbar = () => {
                 <>
                   <Link
                     to="/login"
-                    className="text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                    className="text-violet-700 hover:text-emerald-700 font-semibold py-2 transition-all rounded-lg hover:bg-emerald-50"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
-                    className="text-gray-600 hover:text-blue-600 font-medium py-2 transition-colors"
+                    className="bg-gradient-to-r from-emerald-400 to-violet-500 text-white px-6 py-2 rounded-full hover:from-emerald-500 hover:to-violet-600 font-bold transition-all shadow-md hover:shadow-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Register
@@ -206,4 +205,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

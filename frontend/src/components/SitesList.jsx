@@ -30,26 +30,26 @@ const SitesList = ({ sites }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {sites.map((site) => (
         <Link
           key={site._id}
           to={`/sites/${site._id}`}
-          className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+          className="bg-gradient-to-br from-emerald-50 via-violet-50 to-rose-100 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow border border-emerald-100 group"
         >
           {site.imageUrl && (
             <div className="relative">
               <img
                 src={site.imageUrl}
                 alt={site.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <button
                 onClick={(e) => handleFavoriteClick(site._id, e)}
-                className={`absolute top-2 right-2 p-2 rounded-full ${
+                className={`absolute top-3 right-3 p-2 rounded-full border-2 ${
                   isFavorited(site._id)
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white text-gray-600 hover:text-red-500'
+                    ? 'text-rose-500 border-rose-200 bg-rose-50'
+                    : 'text-violet-400 border-violet-100 hover:text-rose-500 hover:border-rose-200'
                 } transition-colors`}
                 disabled={favoriteLoading[site._id]}
                 title={user ? (isFavorited(site._id) ? 'Remove from favorites' : 'Add to favorites') : 'Login to add favorites'}
@@ -85,4 +85,4 @@ const SitesList = ({ sites }) => {
   );
 };
 
-export default SitesList; 
+export default SitesList;

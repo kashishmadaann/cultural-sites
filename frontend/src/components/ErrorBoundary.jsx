@@ -18,18 +18,26 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-100 p-4">
-          <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold text-red-600 mb-4">Something went wrong</h1>
-            <p className="text-gray-700 mb-2">{this.state.error?.message}</p>
-            <button 
-              onClick={() => window.location.reload()} 
-              className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+        <div className="min-h-screen bg-gradient-to-br from-rose-50 via-amber-50 to-teal-100 p-6 flex items-center justify-center">
+          <div className="max-w-2xl w-full mx-auto bg-white/90 p-8 rounded-3xl shadow-2xl border-2 border-rose-200">
+            <div className="flex items-center mb-6">
+              <svg className="w-10 h-10 text-rose-500 mr-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2.5" fill="#f43f5e" />
+                <path stroke="#fff" strokeWidth="2.5" strokeLinecap="round" d="M12 8v4m0 4h.01" />
+              </svg>
+              <h1 className="text-3xl font-extrabold text-rose-600 tracking-wide">Oops! Something Broke</h1>
+            </div>
+            <p className="text-slate-700 mb-4 text-lg">
+              {this.state.error?.message || "An unexpected error occurred. Please try reloading the page."}
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500 to-emerald-400 text-white font-semibold shadow hover:from-teal-600 hover:to-emerald-500 transition-all"
             >
               Reload Page
             </button>
             {process.env.NODE_ENV === 'development' && (
-              <pre className="bg-gray-100 p-4 rounded overflow-auto text-sm mt-4">
+              <pre className="bg-slate-100/80 border border-amber-200 p-4 rounded-xl overflow-auto text-xs mt-6 text-slate-800">
                 {this.state.errorInfo?.componentStack}
               </pre>
             )}
@@ -41,4 +49,4 @@ class ErrorBoundary extends Component {
   }
 }
 
-export default ErrorBoundary; 
+export default ErrorBoundary;

@@ -11,7 +11,6 @@ const SiteDetails = ({ site }) => {
   const [favoriteLoading, setFavoriteLoading] = useState(false);
 
   useEffect(() => {
-    console.log("SiteDetails: site prop is", site, "site._id is", site?._id);
     if (user) {
       fetchFavorites();
     }
@@ -19,9 +18,9 @@ const SiteDetails = ({ site }) => {
 
   if (!site) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-          <div className="text-gray-600 text-center">
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-violet-50 to-rose-100 flex items-center justify-center">
+        <div className="bg-white/90 p-8 rounded-3xl shadow-2xl max-w-md w-full border-2 border-rose-200">
+          <div className="text-slate-600 text-center">
             <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -53,27 +52,34 @@ const SiteDetails = ({ site }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-violet-50 to-rose-100">
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-white/90 rounded-3xl shadow-2xl overflow-hidden border-2 border-emerald-100">
           {/* Header Section */}
-          <div className="p-6 bg-gradient-to-r from-blue-600 to-blue-800">
-            <div className="flex items-center justify-between">
+          <div className="p-8 bg-gradient-to-r from-emerald-400 via-violet-400 to-rose-400">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 className="text-4xl font-bold text-white mb-2">{site.name}</h1>
+                <h1 className="text-4xl font-extrabold text-white mb-2 drop-shadow tracking-tight">{site.name}</h1>
                 <div className="flex items-center space-x-4">
-                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white">
-                    <FaMapMarkerAlt className="mr-2" />
+                  <span className="inline-flex items-center px-4 py-1 rounded-full bg-white/30 backdrop-blur-sm text-emerald-800 font-semibold shadow">
+                    <FaMapMarkerAlt className="mr-2 text-violet-500" />
                     {site.category}
                   </span>
                   {site && site._id && (
                     <button
                       onClick={handleFavoriteClick}
-                      className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors text-white"
+                      className={`inline-flex items-center px-4 py-1 rounded-full bg-white/30 backdrop-blur-sm hover:bg-white/50 transition-colors font-semibold shadow ${
+                        isFavorited(site._id)
+                          ? 'text-rose-500'
+                          : 'text-violet-700'
+                      }`}
+                      disabled={favoriteLoading}
                     >
-                      {isFavorited(site._id) ? (
+                      {favoriteLoading ? (
+                        <span className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                      ) : isFavorited(site._id) ? (
                         <>
-                          <FaHeart className="mr-2 text-red-300" />
+                          <FaHeart className="mr-2" />
                           <span>Favorited</span>
                         </>
                       ) : (
@@ -90,26 +96,26 @@ const SiteDetails = ({ site }) => {
           </div>
 
           {/* Content Section */}
-          <div className="p-6">
+          <div className="p-8">
             {/* Description */}
             {site.description && (
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">About</h2>
-                <p className="text-gray-600 leading-relaxed">{site.description}</p>
+                <h2 className="text-2xl font-bold text-emerald-700 mb-4 tracking-wide">About</h2>
+                <p className="text-slate-700 leading-relaxed">{site.description}</p>
               </div>
             )}
 
             {/* Location */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">Location</h2>
-              <div className="bg-gray-50 rounded-lg p-4">
+              <h2 className="text-2xl font-bold text-emerald-700 mb-4 tracking-wide">Location</h2>
+              <div className="bg-gradient-to-r from-violet-50 to-emerald-50 rounded-xl p-4 border border-emerald-100">
                 <div className="flex items-start space-x-4">
                   <div className="flex-shrink-0">
-                    <FaMapMarkerAlt className="w-6 h-6 text-blue-500" />
+                    <FaMapMarkerAlt className="w-6 h-6 text-violet-500" />
                   </div>
                   <div>
-                    <p className="text-gray-800 font-medium">Coordinates</p>
-                    <p className="text-gray-600">
+                    <p className="text-emerald-800 font-semibold">Coordinates</p>
+                    <p className="text-slate-700">
                       Latitude: {site.latitude}<br />
                       Longitude: {site.longitude}
                     </p>
@@ -121,9 +127,9 @@ const SiteDetails = ({ site }) => {
             {/* Additional Information */}
             {site.additionalInfo && (
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">Additional Information</h2>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-600 whitespace-pre-line">{site.additionalInfo}</p>
+                <h2 className="text-2xl font-bold text-emerald-700 mb-4 tracking-wide">Additional Information</h2>
+                <div className="bg-gradient-to-r from-violet-50 to-emerald-50 rounded-xl p-4 border border-violet-100">
+                  <p className="text-slate-700 whitespace-pre-line">{site.additionalInfo}</p>
                 </div>
               </div>
             )}
@@ -132,7 +138,7 @@ const SiteDetails = ({ site }) => {
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 to="/sites"
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-400 to-violet-500 text-white rounded-full hover:from-emerald-500 hover:to-violet-600 font-bold transition-all shadow-md hover:shadow-lg"
               >
                 <FaArrowLeft className="mr-2" />
                 Back to Sites
@@ -142,7 +148,7 @@ const SiteDetails = ({ site }) => {
                   href={`https://www.google.com/maps?q=${site.latitude},${site.longitude}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-violet-400 to-rose-400 text-white rounded-full hover:from-violet-500 hover:to-rose-500 font-bold transition-all shadow-md hover:shadow-lg"
                 >
                   <FaMap className="mr-2" />
                   Show on Map
@@ -153,7 +159,7 @@ const SiteDetails = ({ site }) => {
                   href={site.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-400 to-rose-400 text-white rounded-full hover:from-emerald-500 hover:to-rose-500 font-bold transition-all shadow-md hover:shadow-lg"
                 >
                   <FaExternalLinkAlt className="mr-2" />
                   Go to Website
@@ -167,4 +173,4 @@ const SiteDetails = ({ site }) => {
   );
 };
 
-export default SiteDetails; 
+export default SiteDetails;

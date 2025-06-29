@@ -32,17 +32,17 @@ const SiteCard = ({ site }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      <div className="p-4">
+    <div className="bg-gradient-to-br from-emerald-50 via-violet-50 to-rose-100 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 border border-emerald-100">
+      <div className="p-5">
         <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-semibold text-gray-800">{site.name}</h3>
+          <h3 className="text-xl font-extrabold text-emerald-700 tracking-tight">{site.name}</h3>
           <button
             onClick={handleFavoriteClick}
-            className={`p-2 rounded-full ${
+            className={`p-2 rounded-full border-2 ${
               isFavorited(site._id)
-                ? 'text-red-500'
-                : 'text-gray-400 hover:text-red-500'
-            } transition-colors`}
+                ? 'text-rose-500 border-rose-200 bg-rose-50'
+                : 'text-violet-400 border-violet-100 hover:text-rose-500 hover:border-rose-200'
+            } transition-all shadow-sm`}
             disabled={favoriteLoading}
             title={user ? (isFavorited(site._id) ? 'Remove from favorites' : 'Add to favorites') : 'Login to add favorites'}
           >
@@ -55,16 +55,19 @@ const SiteCard = ({ site }) => {
             )}
           </button>
         </div>
-        <p className="text-sm text-gray-500 mb-2">{site.category}</p>
-        <p className="text-gray-700 text-sm mb-3 truncate">
-          {site.description.substring(0, 100)}{site.description.length > 100 && '...'}
+        <p className="text-xs font-semibold text-violet-600 mb-2 uppercase tracking-wider">{site.category}</p>
+        <p className="text-slate-700 text-sm mb-3 truncate">
+          {site.description.substring(0, 100)}
+          {site.description.length > 100 && '...'}
         </p>
         <Link to={`/sites/${site._id}`}>
-          <Button variant="outline" size="sm">View Details</Button>
+          <Button variant="primary" size="sm" className="mt-2 shadow bg-gradient-to-r from-emerald-400 to-violet-500 hover:from-emerald-500 hover:to-violet-600">
+            View Details
+          </Button>
         </Link>
       </div>
     </div>
   );
 };
 
-export default SiteCard; 
+export default SiteCard;
